@@ -1,0 +1,12 @@
+{
+  "name": "gitops-demo",
+  "version": "1.0.0",
+  "description": "Tiny Node.js app for Argo CD GitOps demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
