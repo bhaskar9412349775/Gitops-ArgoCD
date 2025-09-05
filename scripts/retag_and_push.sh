@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [[ $# -lt 2 ]]; then
-  echo "Usage: $0 <dockerhub-username> <new-tag>"
+  echo "Usage: $0 <bhaskar2001> <new-tag>"
   echo "Example: $0 bhaskar v2"
   exit 1
 fi

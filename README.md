@@ -1,22 +1,37 @@
-# GitOps with Argo CD — Sample Project
+# GitOps with Argo CD — Project
 
+This project demonstrates a **GitOps workflow** using **Argo CD** on Kubernetes (K3s/Minikube). 
+It auto-syncs a simple containerized Node.js app from a GitHub repo to a Kubernetes cluster.
+
+---
 This repo contains:
 - `app/` a tiny Node.js app
 - `manifests/` Kubernetes YAML (Deployment, Service, optional Ingress, Kustomize)
 - `argo/app.yaml` an Argo CD `Application` that points to this repo
 - `scripts/retag_and_push.sh` helper to build/push a new Docker tag and update manifests
 
-## Quick Start (after you have K3s + Argo CD)
+---
+## Prerequisites
 
-1) Replace placeholders:
-   - In `manifests/deployment.yaml` and `manifests/kustomization.yaml`: replace `DOCKERHUB_USERNAME`.
-   - In `argo/app.yaml`: replace `USERNAME` with your GitHub username or org, and ensure the repo URL matches.
+- Linux (Ubuntu recommended)
+- [Docker](https://docs.docker.com/engine/install/ubuntu/)
+- [K3s](https://docs.k3s.io/quick-start) or [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Argo CD](https://argo-cd.readthedocs.io/en/stable/getting_started/)
+
+## Verify Setup
+```bash
+docker --version
+kubectl version --client
+kubectl get nodes
+```
+## Quick Start (after you have K3s + Argo CD)
 
 2) Build and push the image:
 ```bash
 cd app
-docker build -t docker.io/<DOCKERHUB_USERNAME>/gitops-demo:v1 .
-docker push docker.io/<DOCKERHUB_USERNAME>/gitops-demo:v1
+docker build -t docker.io/<bhaskar2001>/gitops-demo:v1 .
+docker push docker.io/<bhaskar2001>/gitops-demo:v1
 ```
 
 3) Commit and push this repo to GitHub:
@@ -25,7 +40,7 @@ git init
 git add .
 git commit -m "GitOps demo initial commit"
 git branch -M main
-git remote add origin https://github.com/<USERNAME>/gitops-argocd-sample.git
+git remote add origin https://github.com/<bhaskar9412349775>/gitops-argocd-sample.git
 git push -u origin main
 ```
 
@@ -41,17 +56,23 @@ kubectl apply -f argo/app.yaml
 kubectl -n demo get all
 kubectl -n demo get pods
 kubectl -n demo rollout status deploy/demo-web
-kubectl -n demo port-forward svc/web 8080:80
-curl -s localhost:8080
+kubectl -n demo port-forward svc/web 9191:80
+curl -s localhost:9191
 ```
 
 6) Test GitOps (upgrade v1 -> v2):
 ```bash
-./scripts/retag_and_push.sh <DOCKERHUB_USERNAME> v2
+./scripts/retag_and_push.sh <bhaskar2001> v2
 git add manifests
 git commit -m "bump to v2"
 git push
 # watch Argo CD sync the change
 ```
 
-> Optional: enable `manifests/ingress.yaml` by uncommenting it in `kustomization.yaml`, then add `127.0.0.1 app.local` to `/etc/hosts` and browse http://app.local.
+---
+
+## Screenshots are available
+
+---
+
+# THANK YOU
